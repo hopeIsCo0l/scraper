@@ -133,7 +133,8 @@ def extract_document_links(soup: BeautifulSoup, article_url: str) -> List[Dict[s
             seen_urls.add(full_url)
             
             parsed = urlparse(full_url)
-            qs = parse_qs(parsed.query)
+            raw_qs = parse_qs(parsed.query)
+            qs = {k.lower(): v for k, v in raw_qs.items()}
             
             doc_id = qs.get("documentid", [None])[0]
             art_id = qs.get("articleid", [None])[0]
